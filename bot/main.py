@@ -1,38 +1,8 @@
-import asyncio
-import random
-from typing import Optional
-
 import discord
 from discord.ext import commands
 
 from bot.config import load_config
 from bot.db import ReportDB
-
-
-IPTV_FLAVOR = [
-    "IPTV playlists",
-    "Live TV",
-    "EPG updates",
-    "Channel scans",
-    "Buffering fixes",
-    "Stream health",
-    "CDN routes",
-    "Catch-up TV",
-]
-
-LOCAL_CHANNELS = [
-    "BBC One",
-    "BBC Two",
-    "ITV 1",
-    "Channel 4",
-    "Sky Sports News",
-    "Sky Sports Main Event",
-    "TNT Sports 1",
-    "Eurosport 1",
-    "Discovery",
-    "National Geographic",
-]
-
 
 DEFAULT_GUILD_ID_FOR_SYNC = 1457559352717086917
 
@@ -45,8 +15,6 @@ class SigmaReportsBot(commands.Bot):
 
         self.cfg = load_config()
         self.db = ReportDB(self.cfg.db_path)
-
-        self._presence_task: Optional[asyncio.Task] = None
 
     async def setup_hook(self) -> None:
         for ext in ("bot.cogs.plex_liveboard",):
@@ -68,37 +36,8 @@ class SigmaReportsBot(commands.Bot):
         else:
             print("⚠️  No guild_id configured; skipping guild sync.")
 
-        self._presence_task = asyncio.create_task(self._presence_rotator())
-
     async def on_ready(self):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
-
-    async def _presence_rotator(self):
-        await self.wait_until_ready()
-        while not self.is_closed():
-            try:
-                await self._set_random_presence()
-            except Exception as e:
-                print("Presence: change_presence failed:", repr(e))
-
-            await asyncio.sleep(300)
-
-    def _build_status_pool(self) -> list[str]:
-        pool: list[str] = []
-        pool.extend(IPTV_FLAVOR)
-        pool.extend(LOCAL_CHANNELS)
-        return [p for p in pool if p]
-
-    async def _set_random_presence(self):
-        pool = self._build_status_pool()
-        if not pool:
-            print("Presence: status pool empty (nothing to display).")
-            return
-
-        choice = random.choice(pool)
-        activity = discord.Activity(type=discord.ActivityType.watching, name=choice)
-        await self.change_presence(status=discord.Status.online, activity=activity)
-        print(f"Presence set: Watching {choice}")
 
 
 def main():

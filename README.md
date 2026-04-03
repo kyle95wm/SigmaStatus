@@ -14,26 +14,10 @@ A Discord bot focused on Plex server status tracking, staff notifications, and a
 - `/reportpings` toggles staff pings for Plex down reports
 - `/synccommands` forces a slash-command sync for the current server
 
-### Presence and Reliability
-- Rotating `Watching ...` bot presence themed around IPTV, channels, and trending media
+### Reliability
 - Persistent Discord views so buttons keep working across bot restarts
 - Dockerized deployment for straightforward hosting
 - SQLite persistence for Plex statuses, liveboards, and manual override state
-
-## Bot Presence (Watching Status)
-
-The bot displays a rotating **“Watching …”** status themed around IPTV, live TV, and popular shows/movies.
-
-### How it works
-- Status updates every **5 minutes**
-- Titles are chosen from:
-  - Local IPTV / TV channel names
-  - IPTV-themed phrases
-
-### Example statuses
-- Watching BBC One
-- Watching Sky Sports News
-- Watching IPTV playlists
 
 ## Plex URL health checks
 
