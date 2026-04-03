@@ -35,7 +35,6 @@ class Config:
     staff_channel_id: int
     staff_ping_user_ids: list[int]
     db_path: str
-    tmdb_bearer_token: str
     staff_role_id: int
     plex_alpha_url: str
     plex_omega_url: str
@@ -55,7 +54,6 @@ def load_config() -> Config:
 
     staff_ping_user_ids = _csv_ids(os.getenv("STAFF_PING_USER_IDS", "").strip())
     db_path = os.getenv("DB_PATH", "./data/reports.sqlite3").strip()
-    tmdb_bearer_token = os.getenv("TMDB_BEARER_TOKEN", "").strip()
     plex_alpha_url = os.getenv("PLEX_ALPHA_URL", "").strip()
     plex_omega_url = os.getenv("PLEX_OMEGA_URL", "").strip()
     plex_delta_url = os.getenv("PLEX_DELTA_URL", "").strip()
@@ -78,7 +76,6 @@ def load_config() -> Config:
         staff_channel_id=staff_channel_id,
         staff_ping_user_ids=staff_ping_user_ids,
         db_path=db_path,
-        tmdb_bearer_token=tmdb_bearer_token,
         staff_role_id=staff_role_id,
         plex_alpha_url=plex_alpha_url,
         plex_omega_url=plex_omega_url,

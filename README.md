@@ -16,7 +16,6 @@ A Discord bot focused on Plex server status tracking, staff notifications, and a
 
 ### Presence and Reliability
 - Rotating `Watching ...` bot presence themed around IPTV, channels, and trending media
-- TMDB-backed status titles with safe fallback to local titles if TMDB is unavailable
 - Persistent Discord views so buttons keep working across bot restarts
 - Dockerized deployment for straightforward hosting
 - SQLite persistence for Plex statuses, liveboards, and manual override state
@@ -30,23 +29,11 @@ The bot displays a rotating **“Watching …”** status themed around IPTV, li
 - Titles are chosen from:
   - Local IPTV / TV channel names
   - IPTV-themed phrases
-  - Trending TV shows and movies from **TMDB**
-- TMDB titles are refreshed every **6 hours**
-- If the TMDB token is missing or unavailable, the bot safely falls back to local lists only
 
 ### Example statuses
 - Watching BBC One
 - Watching Sky Sports News
-- Watching Breaking Bad
-- Watching Interstellar
 - Watching IPTV playlists
-
-### TMDB configuration
-To enable TMDB-powered titles, add this to your `.env`:
-
-TMDB_BEARER_TOKEN=your_tmdb_read_access_token
-
-This should be the **TMDB API Read Access Token (v4)**.
 
 ## Plex URL health checks
 
@@ -84,7 +71,7 @@ cd discord-reports-bot
 ```bash 
 cp .env.example .env
 ```
-Fill in your values for the Discord token, staff channel, staff role, and optional TMDB/Plex probe settings.
+Fill in your values for the Discord token, staff channel, staff role, and optional Plex probe settings.
 
 ### 3. Run with Docker
 ```bash 
@@ -93,4 +80,3 @@ docker compose up -d --build
 ## Notes
 - Do **not** commit your `.env`
 - Runtime data is stored in `./data` via Docker volume
-- TMDB integration is optional and non-blocking
